@@ -6,6 +6,10 @@ function App() {
 //Input Field//STATE//
      const [searchTerm, setSearchTerm] = useState("");
      const [items, setItems] = useState([]);
+//Categories STATE//
+     const [categories, setCategories] = useState([]);
+     const [categoryTerm, setCategoryTerm] = useState("");
+
 //GET Data back from API//
      useEffect(()=>{
       async function getData() {
@@ -19,6 +23,18 @@ function App() {
         }
       }
       getData();
+//GET Categories Data from API//
+      async function getCategories() {
+        try {
+          const res = await fetch("https://dummyjson.com/products/categories");
+          const data = await res.json();
+          //console.log(data)
+          setCategories(data.slice(0, 4));
+        } catch (error) {
+          console.log(error)
+        }
+      }
+      getCategories();
      }, [])
 
   return (
@@ -32,7 +48,16 @@ function App() {
        {/*If input in a form/WONT refresh without logic, if input/ALONE no logic needed*/}
        <input id="search-input" type="text" placeholder="Search..." value={searchTerm} 
        onChange={(event)=> setSearchTerm(event.target.value)}/>
-       <div className="categories"></div>
+       <div className="categories">
+        {categories.map((categories)=>{
+          return(
+            <label key={categories.slug}>{categories.slug}
+              <input type="radio" name="category" id="category" value={categories.slug} 
+              checked={categoryTerm === categories.slug} onChange={(event)=> setCategoryTerm(event.target.value)}/>
+            </label>
+          )
+        })}
+       </div>
        <button >Clear All</button>
        <div className="items"></div>
     </div>
