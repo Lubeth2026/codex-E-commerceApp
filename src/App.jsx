@@ -67,7 +67,7 @@ function App() {
           )
         })}
        </div>
-       <button >Clear All</button>
+       <button onClick={()=>{setCategoryTerm(""); setSearchTerm("");}}>Clear All</button>
        <div className="items">
         {filteredItems.map((item)=>(<ItemCard key={item.id} item={item}/>))}
        </div>
