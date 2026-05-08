@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react'
 import './App.css'
+import ItemCard from './components/ItemCard';
 
 function App() {
 //Input Field//STATE//
@@ -9,6 +10,14 @@ function App() {
 //Categories STATE//
      const [categories, setCategories] = useState([]);
      const [categoryTerm, setCategoryTerm] = useState("");
+//When you SEARCH it should FILTER items: so items searched for come up w/ specific category selected//
+     const filteredItems = items.filter((item)=>{
+      const matchedSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
+      {/*This is going to combine search/filter w/ the radio buttons in app*/}
+      const matchedCategory = categoryTerm === "" || categoryTerm === item.category;
+      return matchedSearch && matchedCategory;
+    });
+  //console.log(filteredItems);
 
 //GET Data back from API//
      useEffect(()=>{
@@ -59,7 +68,9 @@ function App() {
         })}
        </div>
        <button >Clear All</button>
-       <div className="items"></div>
+       <div className="items">
+        {filteredItems.map((item)=>(<ItemCard key={item.id} item={item}/>))}
+       </div>
     </div>
   )
 }
