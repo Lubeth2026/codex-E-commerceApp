@@ -21,6 +21,7 @@ function Cart({cartItems, setIsCartOpen}) {
         })}</div>
         </>
      )}
+     <button className="checkout-button" onClick={()=> setIsCartOpen()}>Close</button>
     </div>
     </div>
   )
