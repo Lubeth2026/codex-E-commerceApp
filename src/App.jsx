@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import ItemCard from './components/ItemCard';
+import Cart from './components/Cart';
 
 
 function App() {
@@ -79,9 +80,9 @@ function App() {
           recusandae cupiditate magni tempora.
         </p>
         <div>
-          <button id="cart-button">🛒{cartItems.length}</button>
+          <button onClick={()=> setIsCartOpen(!isCartOpen)} id="cart-button">🛒{cartItems.length}</button>
         </div>
-        
+        {isCartOpen && (<Cart cartItems={cartItems} setIsCartOpen={setIsCartOpen}/>)}
       </div>
       {/*If input in a form/WONT refresh without logic, if input/ALONE no logic needed*/}
       <input id="search-input" type="text" placeholder="Search..." value={searchTerm}
@@ -98,13 +99,13 @@ function App() {
         })}
       </div>
       <select value={sortTerm} onChange={(event) => setSortTerm(event.target.value)}>
-        <options value="">Sort by</options>
-        <options value="price-low-to-high">Price: Low to High</options>
-        <options value="price-high-to-low">Price: High to Low</options>
-        <options value="rating-low-to-high">Rating: Low to High</options>
-        <options value="rating-high-to-low">Rating: High to Low</options>
-        <options value="stock">Stock</options>
-        <options value="name">Name:</options>
+        <option value="">Sort by</option>
+        <option value="price-low-to-high">Price: Low to High</option>
+        <option value="price-high-to-low">Price: High to Low</option>
+        <option value="rating-low-to-high">Rating: Low to High</option>
+        <option value="rating-high-to-low">Rating: High to Low</option>
+        <option value="stock">Stock</option>
+        <option value="name">Name:</option>
       </select>
       <button onClick={() => {
           setCategoryTerm("");
