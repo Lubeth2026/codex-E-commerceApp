@@ -2,7 +2,7 @@
 import React from 'react'
 import "./ItemCard.css"
 
-function ItemCard({item}) {
+function ItemCard({item, cartItems, setCartItems}) {
   return (
     <div className="item-card">
       <div className="item-image-container">
@@ -22,7 +22,7 @@ function ItemCard({item}) {
             <p className="price">${item.price}</p>
             <p className="stock">Available:{item.stock}</p>
         </div>
-        <button>Add to Cart</button>
+        <button onClick={()=> setCartItems([...cartItems, item])}>Add to Cart</button>
       </div>
       </div>
     </div>

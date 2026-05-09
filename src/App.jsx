@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import ItemCard from './components/ItemCard';
 
+
 function App() {
 //Input Field//STATE//
      const [searchTerm, setSearchTerm] = useState("");
@@ -12,6 +13,10 @@ function App() {
      const [categoryTerm, setCategoryTerm] = useState("");
 //Dropdown SORT STATE//
      const [sortTerm, setSortTerm] = useState("");
+//Add Cart Items STATE//
+     const [cartItems, setCartItems] = useState([]);
+//Toggle the cart open/close//
+     const [isCartOpen, setIsCartOpen] = useState(false); 
 //When you SEARCH it should FILTER items: so items searched for come up w/ specific category selected//
      const filteredItems = items.filter((item)=>{
       const matchedSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -65,39 +70,55 @@ function App() {
 
   return (
     <div className="container">
-       <div className="title-section">
+      <div className="title-section">
         <h1>E-commerce App</h1>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla voluptatibus veritatis minima asperiores id dolore soluta, voluptate, ratione quibusdam, sapiente iure autem itaque aperiam corrupti aliquid recusandae cupiditate magni tempora.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
+          voluptatibus veritatis minima asperiores id dolore soluta, voluptate,
+          ratione quibusdam, sapiente iure autem itaque aperiam corrupti aliquid
+          recusandae cupiditate magni tempora.
         </p>
-       </div>
-       {/*If input in a form/WONT refresh without logic, if input/ALONE no logic needed*/}
-       <input id="search-input" type="text" placeholder="Search..." value={searchTerm} 
-       onChange={(event)=> setSearchTerm(event.target.value)}/>
-       <div className="categories">
-        {categories.map((categories)=>{
-          return(
-            <label className={`label-radio ${categories.slug}`} key={categories.slug}>{categories.slug}
+        <div>
+          <button id="cart-button">🛒{cartItems.length}</button>
+        </div>
+        
+      </div>
+      {/*If input in a form/WONT refresh without logic, if input/ALONE no logic needed*/}
+      <input id="search-input" type="text" placeholder="Search..." value={searchTerm}
+       onChange={(event) => setSearchTerm(event.target.value)}/>
+      <div className="categories">
+        {categories.map((categories) => {
+          return (
+            <label className={`label-radio ${categories.slug}`} key={categories.slug}>
+              {categories.slug}
               <input type="radio" name="category" id="category" value={categories.slug} 
-              checked={categoryTerm === categories.slug} onChange={(event)=> setCategoryTerm(event.target.value)}/>
+              checked={categoryTerm === categories.slug} onChange={(event) => setCategoryTerm(event.target.value)}/>
             </label>
-          )
+          );
         })}
-       </div>
-       <select value={sortTerm} onChange={(event)=> setSortTerm(event.target.value)}>
+      </div>
+      <select value={sortTerm} onChange={(event) => setSortTerm(event.target.value)}>
         <options value="">Sort by</options>
         <options value="price-low-to-high">Price: Low to High</options>
         <options value="price-high-to-low">Price: High to Low</options>
         <options value="rating-low-to-high">Rating: Low to High</options>
         <options value="rating-high-to-low">Rating: High to Low</options>
         <options value="stock">Stock</options>
-       </select>
-       <button onClick={()=>{setCategoryTerm(""); setSearchTerm(""); setSortTerm("");}}>Clear All</button>
-       <div className="items">
-        {sortedItems.map((item)=>(<ItemCard key={item.id} item={item}/>))}
-       </div>
+        <options value="name">Name:</options>
+      </select>
+      <button onClick={() => {
+          setCategoryTerm("");
+          setSearchTerm("");
+          setSortTerm("");
+        }}
+      >Clear All</button>
+      <div className="items">
+        {sortedItems.map((item) => (<ItemCard key={item.id} item={item} cartItems={cartItems} 
+        setCartItems={setCartItems}/>
+        ))}
+      </div>
     </div>
-  )
+  );
 }
 
 export default App
