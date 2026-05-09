@@ -10,6 +10,8 @@ function App() {
 //Categories STATE//
      const [categories, setCategories] = useState([]);
      const [categoryTerm, setCategoryTerm] = useState("");
+//Dropdown SORT STATE//
+     const [sortTerm, setSortTerm] = useState("");
 //When you SEARCH it should FILTER items: so items searched for come up w/ specific category selected//
      const filteredItems = items.filter((item)=>{
       const matchedSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -18,7 +20,22 @@ function App() {
       return matchedSearch && matchedCategory;
     });
   //console.log(filteredItems);
-
+//Sorting//
+     const sortedItems = [...filteredItems].sort((a, b)=>{
+      if(sortTerm === "price-low-to-high"){
+        return a.price - b.price; }
+      if (sortTerm === "price-high-to-low") {
+        return b.price - a.price; }
+      if (sortTerm === "rating-low-to-high") {
+        return a.rating - b.rating; }
+      if (sortTerm === "rating-high-to-low") {
+        return b.rating - a.rating; }
+      if (sortTerm === "stock") {
+        return a.stock - b.stock; }
+      if(sortTerm === "name") {
+        return a.title.localeCompare(b.title)
+      }
+     });
 //GET Data back from API//
      useEffect(()=>{
       async function getData() {
@@ -60,16 +77,24 @@ function App() {
        <div className="categories">
         {categories.map((categories)=>{
           return(
-            <label key={categories.slug}>{categories.slug}
+            <label className={`label-radio ${categories.slug}`} key={categories.slug}>{categories.slug}
               <input type="radio" name="category" id="category" value={categories.slug} 
               checked={categoryTerm === categories.slug} onChange={(event)=> setCategoryTerm(event.target.value)}/>
             </label>
           )
         })}
        </div>
-       <button onClick={()=>{setCategoryTerm(""); setSearchTerm("");}}>Clear All</button>
+       <select value={sortTerm} onChange={(event)=> setSortTerm(event.target.value)}>
+        <options value="">Sort by</options>
+        <options value="price-low-to-high">Price: Low to High</options>
+        <options value="price-high-to-low">Price: High to Low</options>
+        <options value="rating-low-to-high">Rating: Low to High</options>
+        <options value="rating-high-to-low">Rating: High to Low</options>
+        <options value="stock">Stock</options>
+       </select>
+       <button onClick={()=>{setCategoryTerm(""); setSearchTerm(""); setSortTerm("");}}>Clear All</button>
        <div className="items">
-        {filteredItems.map((item)=>(<ItemCard key={item.id} item={item}/>))}
+        {sortedItems.map((item)=>(<ItemCard key={item.id} item={item}/>))}
        </div>
     </div>
   )

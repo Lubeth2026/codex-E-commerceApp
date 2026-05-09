@@ -170,6 +170,8 @@ body{
 
 .title-section{
     margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .title-section h1{
@@ -194,4 +196,49 @@ body{
     color: #64748b;
     font-size: 1.05rem;
     line-height: 1.7;
+}
+
+/* CART BUTTON CSS ADDED */
+#cart-button{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+/* DROPDOWN MENU CSS ADDED */
+select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: white;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  margin: 10px 0;
+}
+
+select:focus {
+  border-color: #666;
+}
+
+/* HOVER STYLING FOR LABEL CSS ADDED */
+.label-radio.beauty:hover{
+    background-color: #ffd166;
+    color: white;
+}
+
+.label-radio.fragrances:hover{
+    background-color: #06d6a0;
+    color: white;
+}
+
+.label-radio.furniture:hover{
+    background-color: #118ab2;
+    color: white;
+}
+
+.label-radio.groceries:hover{
+    background-color: #330f97;
+    color: white;
 }

@@ -22,6 +22,7 @@ function ItemCard({item}) {
             <p className="price">${item.price}</p>
             <p className="stock">Available:{item.stock}</p>
         </div>
+        <button>Add to Cart</button>
       </div>
       </div>
     </div>
