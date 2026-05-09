@@ -2,13 +2,25 @@
 import React from 'react'
 import "./Cart.css";
 
-function Cart() {
+function Cart({cartItems, setIsCartOpen}) {
   return (
     <div className="cart-overlay">
     <div className="cart-modal">
      <div className="cart-header">
         <h2>Your Cart</h2>
      </div>
+     {cartItems.length === 0 ? (<p className="empty-cart">No Items...</p>) : (
+        <>
+        <div className="cart-items">{cartItems.map((item)=>{
+            return (<div className="cart-item" key={item.id}>
+                <div>
+                    <p className="item-title">{item.title}</p>
+                    <p className="item-price">{item.price}</p>
+                </div>
+            </div>)
+        })}</div>
+        </>
+     )}
     </div>
     </div>
   )
